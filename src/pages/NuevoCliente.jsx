@@ -1,6 +1,7 @@
-import {useNavigate, Form, useActionData} from 'react-router-dom'
+import {useNavigate, Form, useActionData, redirect} from 'react-router-dom'
 import Formulario from '../components/Formulario'
 import Error from '../components/Error'
+import { agregarCliente } from '../data/clientes'
 
 export const action = async ({request}) => {
   const formData = await request.formData()
@@ -21,6 +22,10 @@ export const action = async ({request}) => {
   if(Object.keys(errores).length){
     return errores
   }
+
+  await agregarCliente(datos)
+
+  return redirect('/')
 }
 
 const NuevoCliente = () => {
@@ -31,7 +36,7 @@ const NuevoCliente = () => {
   return (
     <>
       <h1 className="text-4xl font-black text-blue-900">Nuevo Cliente</h1>
-      <p className="mt-3">LLena todos los cambios para registrar un nuevo cliente</p>
+      <p className="mt-3">LLena todos los campos para registrar un nuevo cliente</p>
 
       <div className="flex justify-end">
         <button
